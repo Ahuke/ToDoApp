@@ -2,7 +2,8 @@ body
 {
     font-family: lato, sans-serif;
     height: 100vh;
-    background-color: antiquewhite;
+    background-color: rgb(20, 20, 20);
+    color: whitesmoke;
 }
 
 .container
@@ -10,7 +11,9 @@ body
     width: 95%;
     height: 90%;
     margin: auto;
-    background-color: rgb(180, 255, 210);
+    background-color: rgb(101, 101, 101);
+    border-top: 1px solid rgba(255, 255, 255, 0.6);
+    border-left: 1px solid rgba(255, 255, 255, 0.6);
     border-radius: 20px;
     display: flex;
     flex-direction: row;
@@ -19,6 +22,7 @@ body
 h1
 {
     text-align: center;
+    color: aliceblue;
     width: 100%;
     height: 5%;
     font-size: 40px;
@@ -28,12 +32,14 @@ h1
 
 .taskList
 {
-    background-color: rgb(255, 180, 180);
+    background-color: rgb(80, 80, 80);
     width: 40%;
     height: 80%;
     margin: 2.5%;
     border-radius: 10px;
     overflow:hidden;
+    border-top: 1px solid rgba(255, 255, 255, 0.6);
+    border-left: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 .taskListContent
@@ -62,12 +68,19 @@ h1
 
 .taskContent
 {
-    background-color: rgb(180, 180, 255);
+    background-color: rgb(80, 80, 80);
     height: 70%;
     width: 50%;
     margin: 2.5%;
     border-radius: 15px;
     overflow: hidden;
+    border-top: 1px solid rgba(255, 255, 255, 0.6);
+    border-left: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.taskContentContainer
+{
+    padding: 15px;
 }
 
 h3
@@ -92,12 +105,51 @@ li > p
 
 li
 {
-    margin: 5px;
+    width: 85%;
+    margin: 15px 5%;
     list-style: none;
-    padding: 10px;
+    padding: 2.5%;
+    border: 1px solid transparent;
     cursor: pointer;
-    background-color: rgba(165, 42, 42, 0.097);
+    background-color: rgba(0, 0, 0, 0.1);
     border-radius: 10px;
+    transition: 0.3s ease;
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.4);
+}
+
+li:hover
+{
+    background-color: rgba(0, 0, 0, 0.18);
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
+    border-left: 1px solid rgba(255, 255, 255, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.3);
+}
+
+.slide-In {
+  animation: slideInLiRight 0.5s ease-in forwards;
+}
+
+@keyframes slideInLiRight {
+  0% {
+    transform: translateX(100%) scale(1.2);
+    opacity: 0;
+  }
+  /* lekki „rozgrzewkowy” ruch i delikatne obniżenie skali */
+  40% {
+    transform: translateX(0%) scale(1.1);
+    opacity: 0.2;
+  }
+  /* prawie na miejscu, niemal stała pozycja */
+  60% {
+    transform: translateX(0%) scale(1.1);
+    opacity: 0.6;
+  }
+  /* szybki finisz */
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
 }
 
 .addTask 
@@ -115,6 +167,7 @@ li
     float: right;
     margin-right: 10px;
     transition: 0.2s ease;
+    filter: invert(1);
 }
 
 .addTask:hover {
@@ -177,9 +230,12 @@ li
     transform: translate(-50%, -50%);
     width: 50%;
     height: 50%;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.2);
     border-radius: 20px;
     z-index: 11;
+    padding: 30px 10px;
+    box-shadow: 5px 5px 10px 0px rgba(66, 68, 90, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .taskCreatorDivIn
@@ -220,4 +276,121 @@ li
     }
 }
 
+.titleInput {
+    width: 78%;
+    height: 35px;
+    line-height: 35px;
+    padding: 0 2%;
+    border-radius: 10px;
+    margin: 5px 1% 10px 4.5%;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
 
+.descriptionInput {
+    width: 86%;
+    height: 56%;
+    padding: 2%;
+    margin: 5px 4.5% 10px 4.5%;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cancelButton
+{
+    height: 35px;
+    width: 35px;
+    border-radius: 10px;
+    transition: 0.2s ease;
+    box-shadow: 2px 2px 5px 0px rgba(66, 68, 90, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.2);
+    color: whitesmoke;
+}
+
+.dateInput
+{
+    height: 35px;
+    border-radius: 10px;
+    width: 30%;
+    flex: 2;
+    padding: 0 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.timeInput
+{
+    height: 35px;
+    border-radius: 10px;
+    flex: 1;
+    padding: 0 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.priorityInput
+{
+    height: 35px;
+    border-radius: 10px;
+    width: 25%;
+    flex: 1;
+    padding: 0 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.submitButton
+{
+    width: 40%;
+    height: 35px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: whitesmoke;
+    margin: 10% 30%;
+    transition: 0.2s ease;
+    box-shadow: 2px 2px 5px 0px rgba(66, 68, 90, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.submitButton:disabled, .submitButton:disabled:hover
+{
+    background-color: rgba(0, 0, 0, 0.1);
+    cursor: default;
+    transform: none;
+    box-shadow: none;
+}
+
+.submitButton:hover, .cancelButton:hover
+{
+    background-color: rgba(255, 255, 255, 0.4);
+    color: black;
+    cursor: pointer;
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 8px 0px rgba(66, 68, 90, 0.5);
+}
+
+.taskCreationDivAdded
+{
+    animation: flyOutRight 0.7s ease-in forwards;
+}
+
+@keyframes flyOutRight {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    filter: blur(0);
+    box-shadow: 5px 5px 10px rgba(66, 68, 90, 0.8);
+  }
+  30% {
+    transform: translate(-50%, -50%) scale(1.08);
+    box-shadow: 8px 8px 15px rgba(66, 68, 90, 0.6);
+  }
+  /* przez pierwsze 75% czasu prawie stoi w miejscu */
+  70% {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 8px 8px 15px rgba(66, 68, 90, 0.6);
+  }
+  /* od 75% do 100% – szybki „wystrzał” w prawo */
+  100% {
+    transform: translate(150%, -50%) scale(0.85);
+    opacity: 0.5;
+    box-shadow: none;
+  }
+}
