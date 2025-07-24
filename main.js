@@ -94,7 +94,6 @@ function addTask() {
     dateInput.addEventListener('change',validateForm);
     timeInput.addEventListener('change',validateForm);
 
-
     //finalizowanie dodawania zadania
     submitButton.addEventListener('click', () => {
         //animacja dodawania i usuwanie okna
@@ -133,6 +132,8 @@ function addTask() {
         setTimeout(() => {
             li.classList.remove('slide-In');
         }, 3000);
+        
+
     })
 
     //zamykanie okna
