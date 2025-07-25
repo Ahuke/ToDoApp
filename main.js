@@ -1,7 +1,29 @@
 const addTaskButton = document.getElementById('addTask');
 const container = document.getElementById('container');
 
-function addTask() {
+const tasks = [];
+
+class CreateTask
+{
+    constructor(title, description, date, time, priority, dateOfCreation, timeOfCreation, done = false)
+    {
+        this.id = tasks.length + 1;
+        this.title = title;
+        this.description = description;
+        this.date = date
+        this.time = time;
+        this.priority = priority;
+        this.createdAtDate = new Date().toISOString().split('T')[0];
+        this.createdAtTime = new Date().toLocaleTimeString('pl-PL', {
+        hour: '2-digit',
+        minute: '2-digit',
+        });
+        this.done = done;
+    }
+}
+
+function addTask() 
+{
     //dodawanie zadania
     const div = document.createElement('div');
     div.classList.add('taskCreatorDiv', 'taskCreatorDivIn');
@@ -105,11 +127,22 @@ function addTask() {
             blur.remove();
         }, 800);
 
+        const NewTask = new CreateTask(
+            titleInput.value,
+            descriptionInput.value,
+            dateInput.value,
+            timeInput.value,
+            priorityInput.value,
+        )
+
+        tasks.push(NewTask);
+
         //dodawanie taska do listy
         const tasklist = document.querySelector('.taskListContent ul');
-        //console.log(tasklist);
+
         const li = document.createElement('li');
         li.style.visibility = 'hidden';
+
         const h2 = document.createElement('h2');
         h2.textContent = titleInput.value;
 
@@ -118,35 +151,71 @@ function addTask() {
 
         const date = document.createElement('p');
         date.classList.add('dateTime');
-        date.textContent = `${dateInput.value} ${timeInput.value}`;
+        date.textContent = `Due to: ${dateInput.value} ${timeInput.value}`;
 
-        
-        tasklist.prepend(li);
-        li.appendChild(h2);
-        li.appendChild(description);
-        li.appendChild(date);
-        setTimeout(() => {
-            li.style.visibility = 'visible';
-            li.classList.add('slide-In');
-        },800);
-        setTimeout(() => {
-            li.classList.remove('slide-In');
-        }, 3000);
-        
-
-    })
+        if(priorityInput.value === 'Niski')
+        {
+            const liPriorityLow = document.getElementById('liPriorityLow');
+            const priorityLow = document.getElementById('priorityLow');
+            liPriorityLow.style.display = 'block';
+            priorityLow.prepend(li);
+            li.appendChild(h2);
+            li.appendChild(description);
+            li.appendChild(date);
+            setTimeout(() => {
+                li.style.visibility = 'visible';
+                li.classList.add('slide-In');
+            },800);
+            setTimeout(() => {
+                li.classList.remove('slide-In');
+            }, 3000);
+        }
+        else if(priorityInput.value === 'Średni')
+        {
+            const liPriorityMedium = document.getElementById('liPriorityMedium');
+            const priorityMedium = document.getElementById('priorityMedium');
+            liPriorityMedium.style.display = 'block';
+            priorityMedium.prepend(li);
+            li.appendChild(h2);
+            li.appendChild(description);
+            li.appendChild(date);
+            setTimeout(() => {
+                li.style.visibility = 'visible';
+                li.classList.add('slide-In');
+            },800);
+            setTimeout(() => {
+                li.classList.remove('slide-In');
+            }, 3000);
+        }
+        else if (priorityInput.value === 'Wysoki')
+        {
+            const liPriorityHigh = document.getElementById('liPriorityHigh');
+            const priorityHigh = document.getElementById('priorityHigh');
+            liPriorityHigh.style.display = 'block';
+            priorityHigh.prepend(li);
+            li.appendChild(h2);
+            li.appendChild(description);
+            li.appendChild(date);
+            setTimeout(() => {
+                li.style.visibility = 'visible';
+                li.classList.add('slide-In');
+            }, 800);
+            setTimeout(() => {
+                li.classList.remove('slide-In');
+            }, 3000);
+        }
 
     //zamykanie okna
-    cancelButton.addEventListener('click', () => {
-        blur.classList.remove('blurInAnimation');
-        blur.classList.add('blurOutAnimation')
-        div.classList.remove('taskCreatorDivIn');
-        div.classList.add('taskCreatorDivOut');
-        setTimeout(() => {
-            div.remove();
-            blur.remove();
-        }, 1000);
-
+        cancelButton.addEventListener('click', () => {
+            blur.classList.remove('blurInAnimation');
+            blur.classList.add('blurOutAnimation')
+            div.classList.remove('taskCreatorDivIn');
+            div.classList.add('taskCreatorDivOut');
+            setTimeout(() => {
+                div.remove();
+                blur.remove();
+            }, 1000);
+        });
     });
 }
 

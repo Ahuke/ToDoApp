@@ -162,6 +162,54 @@ li:hover
   }
 }
 
+.priorityContainer
+{
+    display: none;
+    background-color: transparent;
+    border: transparent;
+    transition: 0.5s ease;
+}
+
+.priorityContainer:hover
+{
+    background-color: rgba(0, 0, 0, 0.18);
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
+    border-left: 1px solid rgba(255, 255, 255, 0.4);
+    transform: none;
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.4);
+    cursor: default;
+}
+
+#liPriorityHigh
+{
+    background: linear-gradient(90deg,rgba(255, 255, 255, 0) 0%, rgba(255, 0, 0, 0.02) 50%, rgba(255, 0, 0, 0.04) 100%);
+}
+
+#liPriorityMedium
+{
+    background: linear-gradient(90deg,rgba(255, 255, 255, 0) 0%, rgba(255, 255, 0, 0.02) 50%, rgba(255, 255, 0, 0.04) 100%);
+}
+
+#liPriorityLow
+{
+    background: linear-gradient(90deg,rgba(255, 255, 255, 0) 0%, rgba(0, 255, 0, 0.02) 50%, rgba(0, 255, 0, 0.04) 100%);
+}
+
+#liPriorityHigh:hover
+{
+    background: linear-gradient(90deg,rgba(255, 0, 0, 0.02) 0%, rgba(255, 0, 0, 0.04) 50%, rgba(255, 0, 0, 0.06) 100%);
+}
+
+#liPriorityMedium:hover
+{
+    background: linear-gradient(90deg,rgba(255, 255, 0, 0.02) 0%, rgba(255, 255, 0, 0.04) 50%, rgba(255, 255, 0, 0.06) 100%);
+}
+
+#liPriorityLow:hover
+{
+    background: linear-gradient(90deg,rgba(0, 255, 0, 0.02) 0%, rgba(0, 255, 0, 0.04) 50%, rgba(0, 255, 0, 0.06) 100%);
+}
+
 .addTask 
 {
     width: 50px;
