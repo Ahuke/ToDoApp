@@ -1,11 +1,15 @@
 const addTaskButton = document.getElementById('addTask');
 const container = document.getElementById('container');
 
+const highPriorityLi = document.querySelector('.priorityHigh li');
+const mediumPriorityLi = document.querySelector('.priorityMedium li');
+const lowPriorityLi = document.querySelector('.priorityLow li');
+
 const tasks = [];
 
 class CreateTask
 {
-    constructor(title, description, date, time, priority, dateOfCreation, timeOfCreation, done = false)
+    constructor(title, description, date, time, priority, dateOfCreation, timeOfCreation, done = false, active = false)
     {
         this.id = tasks.length + 1;
         this.title = title;
@@ -18,8 +22,53 @@ class CreateTask
         hour: '2-digit',
         minute: '2-digit',
         });
-        this.done = done;
+        this.done = false;
+        this.active = false;
     }
+}
+
+function minimizeTask(Activity) {
+    const taskContent = document.querySelector('.taskContent');
+    taskContent.classList.add('taskDetailAnimationOut')
+
+    setTimeout(() => {
+        document.querySelector('.taskContent').remove();
+    }, 600)
+    Activity.active = false;
+}
+
+function deleteTask() {
+    minimizeTask();
+}
+
+function showTaskDetails() {
+
+    let taskContentDiv = document.getElementById('taskContent');
+
+    const template = document.getElementById('taskContentTemplate');
+    const clone = template.content.cloneNode(true);
+
+    const taskId = this.dataset.id; // <- ID jako string
+    const task = tasks.find(t => t.id === Number(taskId)); // szukanie obiektu w tablicy
+
+    clone.querySelector('h2').textContent = task.title;
+    clone.querySelector('.longDescription').textContent = task.description;
+    clone.querySelector('.dateTime').textContent = `Due to: ${task.date} ${task.time}`;
+    clone.querySelector('.createdDateTime').textContent = `Created at: ${task.createdAtDate} ${task.createdAtTime}`;        
+
+    if(task.active !== true)
+    {
+        container.appendChild(clone);
+        taskContentDiv = document.getElementById('taskContent');
+        taskContentDiv.classList.add('taskDetailAnimationIn');
+        setTimeout(() => {
+            taskContentDiv.classList.remove('taskDetailAnimationIn')
+        }, 605)
+    }
+    task.active = true;
+
+    const minimizeButton = document.querySelector('.minimizeTask')
+    minimizeButton.addEventListener('click', () => minimizeTask(task))
 }
 
 function addTask() 
@@ -32,6 +81,8 @@ function addTask()
     console.log('add');
     container.appendChild(blur)
     container.appendChild(div);
+
+    container.classList.add('scaleAnimationIn');
 
     const cancelButton = document.createElement('button');
     cancelButton.textContent = 'X';
@@ -99,6 +150,22 @@ function addTask()
     inputContainer.appendChild(priorityInput);
     div.appendChild(submitButton);
 
+    //zamykanie okna
+    cancelButton.addEventListener('click', () => {
+        console.log('canceled');
+        container.classList.remove('scaleAnimationIn')
+        container.classList.add('scaleAnimationOut')
+        blur.classList.remove('blurInAnimation');
+        blur.classList.add('blurOutAnimation')
+        div.classList.remove('taskCreatorDivIn');
+        div.classList.add('taskCreatorDivOut');
+        setTimeout(() => {
+            div.remove();
+            blur.remove();
+            container.classList.remove('scaleAnimationOut')
+        }, 405);
+    });
+
 
     //sprawdzanie czy inputy nie są puste
     validateForm = () => {
@@ -121,8 +188,11 @@ function addTask()
         //animacja dodawania i usuwanie okna
         div.classList.add('taskCreationDivAdded');
         blur.classList.add('blurOutAnimation')
+        container.classList.remove('scaleAnimationIn');
+        container.classList.add('scaleAnimationOut');
         console.log('added')
         setTimeout(() => {
+            container.classList.remove('scaleAnimationOut');
             div.remove();
             blur.remove();
         }, 800);
@@ -144,10 +214,10 @@ function addTask()
         li.style.visibility = 'hidden';
 
         const h2 = document.createElement('h2');
-        h2.textContent = titleInput.value;
+        h2.textContent = `${titleInput.value.slice(0, 50)}...`;
 
         const description = document.createElement('p');
-        description.textContent = descriptionInput.value;
+        description.textContent = `${descriptionInput.value.slice(0, 80)}...`;
 
         const date = document.createElement('p');
         date.classList.add('dateTime');
@@ -169,6 +239,9 @@ function addTask()
             setTimeout(() => {
                 li.classList.remove('slide-In');
             }, 3000);
+            
+            li.dataset.id = NewTask.id; //dodawanie id do li
+            li.addEventListener('click', showTaskDetails);
         }
         else if(priorityInput.value === 'Średni')
         {
@@ -186,6 +259,9 @@ function addTask()
             setTimeout(() => {
                 li.classList.remove('slide-In');
             }, 3000);
+
+            li.dataset.id = NewTask.id; //dodawanie id do li
+            li.addEventListener('click', showTaskDetails);
         }
         else if (priorityInput.value === 'Wysoki')
         {
@@ -203,19 +279,10 @@ function addTask()
             setTimeout(() => {
                 li.classList.remove('slide-In');
             }, 3000);
-        }
 
-    //zamykanie okna
-        cancelButton.addEventListener('click', () => {
-            blur.classList.remove('blurInAnimation');
-            blur.classList.add('blurOutAnimation')
-            div.classList.remove('taskCreatorDivIn');
-            div.classList.add('taskCreatorDivOut');
-            setTimeout(() => {
-                div.remove();
-                blur.remove();
-            }, 1000);
-        });
+            li.dataset.id = NewTask.id; //dodawanie id do li
+            li.addEventListener('click', showTaskDetails);
+        }
     });
 }
 

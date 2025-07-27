@@ -9,40 +9,46 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Michroma&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <title>Document</title>
  </head>
- <body>
-    <h1>To Do App</h1>
-    <div class="container" id="container">
-        <div class="taskList" id="taskList">
+ <body> 
+   <h1>To Do App</h1>
+      <div class="container" id="container">
+         <div class="taskList" id="taskList">
             <h3>Lista zadań</h3>
             <div class="taskListContent">
                <ul id="taskUL">
                   <li class="priorityContainer" id="liPriorityHigh">
                      <ul id="priorityHigh">
-
                      </ul>
                   </li>
                   <li class="priorityContainer" id="liPriorityMedium">
                      <ul id="priorityMedium">
-
                      </ul>
                   </li>
                   <li class="priorityContainer" id="liPriorityLow">
                      <ul id="priorityLow">
-
                      </ul>
                   </li>
                </ul>
             </div>
             <button class="addTask" id="addTask" title="addTask"></button>
-        </div>
-        <div class="taskContent" id="taskContent">
-            <h3>Tytuł taska</h3>
-            <div class="taskContentContainer">
-               <h2 id="titleTaskDescription">opis</h2>
-               <p id="longDescription">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum veniam repellat qui deleniti libero aliquam voluptas amet nesciunt at facere blanditiis voluptatum dolor dignissimos quos, vero quisquam velit distinctio quas.</p>
+         </div>
+      </div>      
+   <template id="taskContentTemplate">
+      <div class="taskContent" id="taskContent">
+         <h3>Zadanie
+            <button class="deleteTask">X</button>
+            <button class="minimizeTask">—</button> 
+         </h3>
+         <div class="taskContentContainer">
+            <h2 class="titleTaskDescription"></h2>
+            <p class="longDescription"></p>
+            <div class="datesContainer">
+               <p class="dateTime"></p>
+               <p class="createdDateTime"></p>
             </div>
-        </div>
-    </div>
-    <script src="main.js"></script>
+         </div>
+      </div>
+   </template>
+   <script src="main.js"></script>
  </body>
  </html>
