@@ -311,6 +311,11 @@ li:hover
     border-left: 1px solid rgba(255, 255, 255, 0.4);
 }
 
+#priorityHigh > li:active, #priorityMedium > li:active, #priorityLow > li:active
+{
+    transform: scale(0.97);
+}
+
 .addTask 
 {
     width: 50px;
@@ -660,7 +665,7 @@ li:hover
   20%
   {
     opacity: 1;
-    transform: scaleY(1.15);
+    transform: scaleY(1.25);
     height: auto;
   }
   100% {

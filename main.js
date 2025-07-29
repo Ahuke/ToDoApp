@@ -71,14 +71,16 @@ function deleteTask(taskObject) {
     const parentUl = liToRemove.parentElement;
     if(liToRemove)
     {
+        liToRemove.classList.add('collapsePriority')
+        setTimeout(() => {
             liToRemove.remove()
 
-            if(parentUl.children.length === 0)
-            {
-                const wraper = parentUl.parentElement;
-                        wraper.style.display = 'none';
-                        console.log('done2')
-            }
+        if(parentUl.children.length === 0)
+        {
+            const wraper = parentUl.parentElement;
+            wraper.style.display = 'none';
+        }
+        },600)
     }
 
     const indexToRemove = tasks.findIndex(t => t.id === taskObject.id);
