@@ -27,6 +27,32 @@ class CreateTask
     }
 }
 
+function popUpMenu(box, blured)
+{
+
+    box.classList.add('taskCreatorDiv', 'taskCreatorDivIn');
+
+    //const blur = document.createElement('div');
+    blured.classList.add('blur', 'blurInAnimation');
+
+    //console.log('add');
+    container.appendChild(blured)
+    container.appendChild(box);
+
+    container.classList.add('scaleAnimationIn');
+}
+
+function popOutMenu(box, blured)
+{
+    container.classList.remove('scaleAnimationIn');
+    container.classList.add('scaleAnimationOut');
+    setTimeout(() => {
+        container.classList.remove('scaleAnimationOut');
+        box.remove();
+        blured.remove();
+    }, 800)
+}
+
 function minimizeTask(Activity) {
     const taskContent = document.querySelector('.taskContent');
     taskContent.classList.add('taskDetailAnimationOut')
@@ -37,8 +63,29 @@ function minimizeTask(Activity) {
     Activity.active = false;
 }
 
-function deleteTask() {
-    minimizeTask();
+function deleteTask(taskObject) {
+
+    minimizeTask(taskObject);
+
+    const liToRemove = document.querySelector(`li[data-id="${taskObject.id}"]`);
+    const parentUl = liToRemove.parentElement;
+    if(liToRemove)
+    {
+            liToRemove.remove()
+
+            if(parentUl.children.length === 0)
+            {
+                const wraper = parentUl.parentElement;
+                        wraper.style.display = 'none';
+                        console.log('done2')
+            }
+    }
+
+    const indexToRemove = tasks.findIndex(t => t.id === taskObject.id);
+    if(indexToRemove !== -1)
+    {
+        tasks.splice(indexToRemove, 1)
+    }
 }
 
 function showTaskDetails() {
@@ -48,7 +95,7 @@ function showTaskDetails() {
     const template = document.getElementById('taskContentTemplate');
     const clone = template.content.cloneNode(true);
 
-    const taskId = this.dataset.id; // <- ID jako string
+    const taskId = this.dataset.id; // ID jako string
     const task = tasks.find(t => t.id === Number(taskId)); // szukanie obiektu w tablicy
 
     clone.querySelector('h2').textContent = task.title;
@@ -69,20 +116,18 @@ function showTaskDetails() {
 
     const minimizeButton = document.querySelector('.minimizeTask')
     minimizeButton.addEventListener('click', () => minimizeTask(task))
+
+    const deleteButton = document.querySelector('.deleteTask')
+    deleteButton.addEventListener('click', () => deleteTask(task));
 }
 
 function addTask() 
 {
     //dodawanie zadania
     const div = document.createElement('div');
-    div.classList.add('taskCreatorDiv', 'taskCreatorDivIn');
     const blur = document.createElement('div');
-    blur.classList.add('blur', 'blurInAnimation');
-    console.log('add');
-    container.appendChild(blur)
-    container.appendChild(div);
 
-    container.classList.add('scaleAnimationIn');
+    popUpMenu(div, blur); //funkcja animująca pojawienie się menu
 
     const cancelButton = document.createElement('button');
     cancelButton.textContent = 'X';
