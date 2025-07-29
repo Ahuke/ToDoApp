@@ -53,19 +53,19 @@ function popOutMenu(box, blured)
     }, 800)
 }
 
-function minimizeTask(Activity) {
-    const taskContent = document.querySelector('.taskContent');
-    taskContent.classList.add('taskDetailAnimationOut')
+function minimizeTask(taskObject, taskContentDiv) 
+{
+    taskContentDiv.classList.add('taskDetailAnimationOut')
+    taskObject.active = false;
 
     setTimeout(() => {
-        document.querySelector('.taskContent').remove();
+        taskContentDiv.remove();
     }, 600)
-    Activity.active = false;
 }
 
-function deleteTask(taskObject) {
+function deleteTask(taskObject, taskContentDiv) {
 
-    minimizeTask(taskObject);
+    minimizeTask(taskObject, taskContentDiv);
 
     const liToRemove = document.querySelector(`li[data-id="${taskObject.id}"]`);
     const parentUl = liToRemove.parentElement;
@@ -92,23 +92,26 @@ function deleteTask(taskObject) {
 
 function showTaskDetails() {
 
-    let taskContentDiv = document.getElementById('taskContent');
+    const taskId = this.dataset.id; // ID jako string
+    const task = tasks.find(t => t.id === Number(taskId)); // szukanie obiektu w tablicy
+    if(!task) return;
+
+    if(task.active) return;
 
     const template = document.getElementById('taskContentTemplate');
     const clone = template.content.cloneNode(true);
+    const taskContentDiv = clone.querySelector('.taskContent');
 
-    const taskId = this.dataset.id; // ID jako string
-    const task = tasks.find(t => t.id === Number(taskId)); // szukanie obiektu w tablicy
+    taskContentDiv.querySelector('h2').textContent = task.title;
+    taskContentDiv.querySelector('.longDescription').textContent = task.description;
+    taskContentDiv.querySelector('.dateTime').textContent = `Due to: ${task.date} ${task.time}`;
+    taskContentDiv.querySelector('.createdDateTime').textContent = `Created at: ${task.createdAtDate} ${task.createdAtTime}`;        
 
-    clone.querySelector('h2').textContent = task.title;
-    clone.querySelector('.longDescription').textContent = task.description;
-    clone.querySelector('.dateTime').textContent = `Due to: ${task.date} ${task.time}`;
-    clone.querySelector('.createdDateTime').textContent = `Created at: ${task.createdAtDate} ${task.createdAtTime}`;        
+    container.appendChild(clone);
+    //const taskContentDiv = document.getElementById('taskContent');
 
     if(task.active !== true)
     {
-        container.appendChild(clone);
-        taskContentDiv = document.getElementById('taskContent');
         taskContentDiv.classList.add('taskDetailAnimationIn');
         setTimeout(() => {
             taskContentDiv.classList.remove('taskDetailAnimationIn')
@@ -116,11 +119,11 @@ function showTaskDetails() {
     }
     task.active = true;
 
-    const minimizeButton = document.querySelector('.minimizeTask')
-    minimizeButton.addEventListener('click', () => minimizeTask(task))
+    const minimizeButton = taskContentDiv.querySelector('.minimizeTask')
+    const deleteButton = taskContentDiv.querySelector('.deleteTask')
 
-    const deleteButton = document.querySelector('.deleteTask')
-    deleteButton.addEventListener('click', () => deleteTask(task));
+    minimizeButton.addEventListener('click', () => minimizeTask(task, taskContentDiv))
+    deleteButton.addEventListener('click', () => deleteTask(task, taskContentDiv));
 }
 
 function addTask() 
